@@ -17,8 +17,23 @@ const App = () => {
     const personObj = {
       name: newName
     }
-    setPersons(persons.concat(personObj))
-    setNewName('')
+
+    if (checkNameDuplicate(personObj)) {
+      alert(`${personObj.name} is alreadly added to the phonebook`)
+      setNewName('')
+    } else {
+      setPersons(persons.concat(personObj))
+      setNewName('')
+    }
+  }
+
+  const checkNameDuplicate = (name) => {
+    let isDuplicate = false
+    persons.forEach(person => {
+      if (JSON.stringify(person) === JSON.stringify(name)) isDuplicate = true
+    })
+
+    return isDuplicate
   }
 
   return (
