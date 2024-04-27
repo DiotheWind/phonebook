@@ -11,6 +11,13 @@ const App = () => {
   ])
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filterName, setFilterName] = useState('')
+  const [filter, toggleFilter] = useState(false)
+
+  const handleFilterChange = (e) => {
+    setFilterName(e.target.value)
+    e.target.value === '' ? toggleFilter(false) : toggleFilter(true)
+  }
 
   const handleNameChange = (e) => {
     setNewName(e.target.value)
@@ -47,9 +54,15 @@ const App = () => {
     return isDuplicate
   }
 
+  const namesToShow = filter
+  ? persons.filter(person => person.name.toLowerCase().includes(filterName.toLowerCase()))
+  : persons
+
   return (
     <div>
       <h2>Phonebook</h2>
+
+      <p>filter shown with <input value={filterName} onChange={handleFilterChange} /></p>
       <form onSubmit={addPersonToList}>
         <div>
           name: <input value={newName} onChange={handleNameChange} />
@@ -63,7 +76,7 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      {persons.map(person => <DisplayNamesAndNumbers key={person.name} name={person.name} number={person.number} />)}
+      {namesToShow.map(person => <DisplayNamesAndNumbers key={person.name} name={person.name} number={person.number} />)}
     </div>
   )
 }
