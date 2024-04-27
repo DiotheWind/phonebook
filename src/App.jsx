@@ -58,7 +58,7 @@ const App = () => {
     }
 
     if (checkNameDuplicate(personObj)) {
-      alert(`${personObj.name} is alreadly added to the phonebook`)
+      alert(`${personObj.name} is already added to the phonebook`)
       setNewName('')
       setNewNumber('')
     } else {
@@ -68,10 +68,10 @@ const App = () => {
     }
   }
 
-  const checkNameDuplicate = (name) => {
+  const checkNameDuplicate = (personObj) => {
     let isDuplicate = false
     persons.forEach(person => {
-      if (JSON.stringify(person) === JSON.stringify(name)) isDuplicate = true
+      if (person.name.toLowerCase() === personObj.name.toLowerCase()) isDuplicate = true
     })
 
     return isDuplicate
