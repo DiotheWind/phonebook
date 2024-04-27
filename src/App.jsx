@@ -1,29 +1,40 @@
 import { useState } from 'react'
 
-const Numbers = ({ name }) => <p>{name}</p>
+const DisplayNamesAndNumbers = ({ name, number }) => <p>{name} {number}</p>
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { name: 'Arto Hellas' }
+    {
+      name: 'Arto Hellas',
+      number: '09655706535'
+    }
   ])
   const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
 
-  const handleInputChange = (e) => {
+  const handleNameChange = (e) => {
     setNewName(e.target.value)
+  }
+
+  const handleNumberChange = (e) => {
+    setNewNumber(e.target.value)
   }
 
   const addPersonToList = (e) => {
     e.preventDefault()
     const personObj = {
-      name: newName
+      name: newName,
+      number: newNumber
     }
 
     if (checkNameDuplicate(personObj)) {
       alert(`${personObj.name} is alreadly added to the phonebook`)
       setNewName('')
+      setNewNumber('')
     } else {
       setPersons(persons.concat(personObj))
       setNewName('')
+      setNewNumber('')
     }
   }
 
@@ -41,7 +52,10 @@ const App = () => {
       <h2>Phonebook</h2>
       <form onSubmit={addPersonToList}>
         <div>
-          name: <input value={newName} onChange={handleInputChange} />
+          name: <input value={newName} onChange={handleNameChange} />
+        </div>
+        <div>
+          number: <input value={newNumber} onChange={handleNumberChange}/>
         </div>
         <div>
           <button type='submit'>add</button>
@@ -49,7 +63,7 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      {persons.map(person => <Numbers key={person.name} name={person.name} />)}
+      {persons.map(person => <DisplayNamesAndNumbers key={person.name} name={person.name} number={person.number} />)}
     </div>
   )
 }
