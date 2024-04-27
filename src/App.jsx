@@ -10,10 +10,18 @@ const App = () => {
     setNewName(e.target.value)
   }
 
+  const addPersonToList = (e) => {
+    e.preventDefault()
+    const personObj = {
+      name: newName
+    }
+    setPersons(persons.concat(personObj))
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
-      <form>
+      <form onSubmit={addPersonToList}>
         <div>
           name: <input value={newName} onChange={handleInputChange} />
         </div>
