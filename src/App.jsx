@@ -6,7 +6,8 @@ const App = () => {
   const [persons, setPersons] = useState([
     {
       name: 'Arto Hellas',
-      number: '09655706535'
+      number: '09655706535',
+      id: 1
     }
   ])
   const [newName, setNewName] = useState('')
@@ -29,9 +30,11 @@ const App = () => {
 
   const addPersonToList = (e) => {
     e.preventDefault()
+
     const personObj = {
       name: newName,
-      number: newNumber
+      number: newNumber,
+      id: persons.length + 1
     }
 
     if (checkNameDuplicate(personObj)) {
@@ -76,7 +79,7 @@ const App = () => {
       </form>
 
       <h2>Numbers</h2>
-      {namesToShow.map(person => <DisplayNamesAndNumbers key={person.name} name={person.name} number={person.number} />)}
+      {namesToShow.map(person => <DisplayNamesAndNumbers key={person.id} name={person.name} number={person.number} />)}
     </div>
   )
 }
