@@ -64,12 +64,14 @@ const App = () => {
     return isDuplicate
   }
 
-  const deletePersonFromList = (id) => {
-    phonebookService
+  const deletePersonFromList = (name, id) => {
+    if (window.confirm(`Delete ${name}?`)) {
+      phonebookService
       .deleteName(id)
       .then(deletedPerson => {
         setPersons(persons.filter(person => person.id !== deletedPerson.id))
       })
+    }
   }
 
   const namesToShow = filter
