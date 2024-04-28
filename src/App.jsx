@@ -3,6 +3,7 @@ import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
+import phonebookService from './services/backendHandler'
 
 const App = () => {
   const [persons, setPersons] = useState([])
@@ -12,10 +13,10 @@ const App = () => {
   const [filter, toggleFilter] = useState(false)
 
   useEffect(() => {
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        setPersons(response.data)
+    phonebookService
+      .getNames()
+      .then(name => {
+        setPersons(name)
       })
   }, [])
 
@@ -38,7 +39,6 @@ const App = () => {
     const personObj = {
       name: newName,
       number: newNumber,
-      // id: persons.length + 1
     }
 
     if (checkNameDuplicate(personObj)) {
@@ -46,10 +46,10 @@ const App = () => {
       setNewName('')
       setNewNumber('')
     } else {
-      axios
-        .post('http://localhost:3001/persons', personObj)
-        .then(response => {
-          setPersons(persons.concat(response.data))
+      phonebookService
+        .updateServer(personObj)
+        .then(newPersons => {
+          setPersons(persons.concat(newPersons))
           setNewName('')
           setNewNumber('')
         })
