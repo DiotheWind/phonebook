@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
+import axios from 'axios'
 
 const Filter = ({ filterName, handleFilterChange }) => <p>filter shown with <input value={filterName} onChange={handleFilterChange} /></p>
 
@@ -34,6 +35,14 @@ const App = () => {
   const [newNumber, setNewNumber] = useState('')
   const [filterName, setFilterName] = useState('')
   const [filter, toggleFilter] = useState(false)
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        setPersons(response.data)
+      })
+  }, [])
 
   const handleFilterChange = (e) => {
     setFilterName(e.target.value)
