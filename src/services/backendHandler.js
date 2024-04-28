@@ -11,4 +11,9 @@ const updateServer = (personObj) => {
     return promise.then(response => response.data)
 }
 
-export default { getNames, updateServer }
+const deleteName = (id) => {
+    const promise = axios.delete(`${serverURL}/${id}`)
+    return promise.then(response => response.data)
+}
+
+export default { getNames, updateServer, deleteName }

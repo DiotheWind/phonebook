@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
 import Filter from './components/Filter'
 import PersonForm from './components/PersonForm'
 import Persons from './components/Persons'
@@ -15,8 +14,8 @@ const App = () => {
   useEffect(() => {
     phonebookService
       .getNames()
-      .then(name => {
-        setPersons(name)
+      .then(persons => {
+        setPersons(persons)
       })
   }, [])
 
@@ -65,6 +64,14 @@ const App = () => {
     return isDuplicate
   }
 
+  const deletePersonFromList = (id) => {
+    phonebookService
+      .deleteName(id)
+      .then(deletedPerson => {
+        setPersons(persons.filter(person => person.id !== deletedPerson.id))
+      })
+  }
+
   const namesToShow = filter
   ? persons.filter(person => person.name.toLowerCase().includes(filterName.toLowerCase()))
   : persons
@@ -84,7 +91,7 @@ const App = () => {
       />
 
       <h2>Numbers</h2>
-      <Persons persons={namesToShow} />
+      <Persons persons={namesToShow} deletePersonFromList={deletePersonFromList} />
     </div>
   )
 }
