@@ -38,7 +38,7 @@ const App = () => {
     const personObj = {
       name: newName,
       number: newNumber,
-      id: persons.length + 1
+      // id: persons.length + 1
     }
 
     if (checkNameDuplicate(personObj)) {
@@ -46,9 +46,13 @@ const App = () => {
       setNewName('')
       setNewNumber('')
     } else {
-      setPersons(persons.concat(personObj))
-      setNewName('')
-      setNewNumber('')
+      axios
+        .post('http://localhost:3001/persons', personObj)
+        .then(response => {
+          setPersons(persons.concat(response.data))
+          setNewName('')
+          setNewNumber('')
+        })
     }
   }
 
