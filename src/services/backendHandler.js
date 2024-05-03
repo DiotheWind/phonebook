@@ -1,5 +1,5 @@
 import axios from 'axios'
-const serverURL = 'http://localhost:3002/api/persons'
+const serverURL = '/api/persons'
 
 const getNames = () => {
     const promise = axios.get(serverURL)
